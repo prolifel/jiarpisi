@@ -11,6 +11,8 @@ PACKAGE = $(shell head -1 go.mod | awk '{print $$2}')
 
 compile: ## creating pb file and build golang
 	@protoc -I greet/${PROTO_DIR} --go_out=. --go_opt=module=${PACKAGE} --go-grpc_out=. --go-grpc_opt=module=${PACKAGE} greet/${PROTO_DIR}/*.proto
+	@go build -o bin/greet/server ./greet/server
+	@go build -o bin/greet/client ./greet/client
 
 clean: ## clean all pb file
 	@find . -type f -name '*.pb.go' -exec rm {} +
